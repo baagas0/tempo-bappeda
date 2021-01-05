@@ -1,0 +1,34 @@
+# Only the following file extensions are allowed
+RewriteEngine On
+RewriteCond %{REMOTE_ADDR} !^(xxx\.xxx\.xxx\.xxx|xxx\.xxx\xxx\.xxx|66\.249\.)
+RewriteCond %{HTTP_HOST} !^(127\.0\.0\.0|localhost) [NC]
+RewriteCond %{HTTP_REFERER} !^https?://(.+\.)?semarangkota\.go.id/ [NC]
+RewriteRule .* http://bappeda.semarangkota.go.id/ [L]
+
+#Order Allow,Deny
+#Deny from all
+#<FilesMatch "\.([Jj][Pp][Ee]?[Gg]?|[Pp][Nn][Gg]|[Gg][Ii][Ff]|[Gg][Zz]|[Pp][Dd][Ff])$">
+#Allow from all
+#</FilesMatch>
+
+# Block double extensions from being uploaded or accessed, including htshells
+<FilesMatch ".*\.([^.]+)\.([^.]+)$">
+#Order Deny,Allow
+#Deny from all
+</FilesMatch>
+ 
+# Only allow GET and POST HTTP methods
+<LimitExcept GET POST>
+Deny from all
+</LimitExcept>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|psd|log|sh|env|sql|json|phar|yml)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+<Files "artisan">
+Order Allow,Deny
+Deny from all
+</Files>
+
+
